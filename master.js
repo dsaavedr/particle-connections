@@ -39,7 +39,7 @@ function init() {
         const vel = Vector.random();
         vel.setMag(random(0.3, 1.3));
 
-        particles.push(new Particle(pos, vel, "#999", Math.floor(random(3, 6))))
+        particles.push(new Particle(pos, vel, "#999", Math.floor(random(3, 8))))
     }
 
     ani();
