@@ -1,6 +1,6 @@
-let n = 20,
+let n = 30,
     particles = [],
-    cutoff = 100,
+    cutoff = 150,
     WIDTH, HEIGHT;
 
 var canvas = document.getElementById('canvas'),
@@ -25,6 +25,8 @@ function init() {
     ctx.closePath();
 
     ctx.strokeStyle = "grey";
+    ctx.lineWidth = 2;
+    ctx.globalAlpha = 0.6;
 
     for (let i = 0; i < n; i++) {
         const x = random(WIDTH),
@@ -32,8 +34,9 @@ function init() {
 
         const pos = new Vector(x, y);
         const vel = Vector.random();
+        vel.setMag(random(0.5, 1));
 
-        particles.push(new Particle(pos, vel, "black"))
+        particles.push(new Particle(pos, vel, "#999", Math.floor(random(3, 6))))
     }
 
     ani();
@@ -52,11 +55,18 @@ function ani() {
 
         for (let j = 0; j < particles.length; j++) {
             let p2 = particles[j];
+            let dist = Vector.dist(p.pos, p2.pos);
 
-            if (Vector.dist(p.pos, p2.pos) < cutoff) {
+            if (dist <= cutoff) {
+                ctx.save();
+                ctx.globalAlpha = 0.8 - scale(dist, cutoff / 2, cutoff, 0, 0.8);
+                ctx.lineWidth = 2 - scale(dist, 0, cutoff, 0.2, 2);
+                ctx.beginPath();
                 ctx.moveTo(p.pos.x, p.pos.y);
                 ctx.lineTo(p2.pos.x, p2.pos.y);
+                ctx.closePath();
                 ctx.stroke();
+                ctx.restore();
             }
         }
 
