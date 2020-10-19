@@ -1,6 +1,6 @@
-let n = 30,
+let n = 100,
     particles = [],
-    cutoff = 150,
+    cutoff,
     WIDTH, HEIGHT;
 
 var canvas = document.getElementById('canvas'),
@@ -14,6 +14,9 @@ var requestAnimationFrame = window.requestAnimationFrame ||
 function init() {
     WIDTH = window.innerWidth;
     HEIGHT = window.innerHeight;
+
+    cutoff = scale(WIDTH, 600, 3000, 100, 200);
+    log(cutoff);
 
     canvas.setAttribute('width', WIDTH);
     canvas.setAttribute('height', HEIGHT);
@@ -34,7 +37,7 @@ function init() {
 
         const pos = new Vector(x, y);
         const vel = Vector.random();
-        vel.setMag(random(0.5, 1));
+        vel.setMag(random(0.3, 1.3));
 
         particles.push(new Particle(pos, vel, "#999", Math.floor(random(3, 6))))
     }
